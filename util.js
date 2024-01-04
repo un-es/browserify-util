@@ -19,6 +19,8 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+var isProcessAvailable = typeof process !== 'undefined';
+
 var getOwnPropertyDescriptors = Object.getOwnPropertyDescriptors ||
   function getOwnPropertyDescriptors(obj) {
     var keys = Object.keys(obj);
@@ -73,12 +75,12 @@ exports.format = function(f) {
 // Returns a modified function which warns once by default.
 // If --no-deprecation is set, then it is a no-op.
 exports.deprecate = function(fn, msg) {
-  if (typeof process !== 'undefined' && process.noDeprecation === true) {
+  if (isProcessAvailable && process.noDeprecation === true) {
     return fn;
   }
 
   // Allow for deprecating things in the process of starting up.
-  if (typeof process === 'undefined') {
+  if (!isProcessAvailable) {
     return function() {
       return exports.deprecate(fn, msg).apply(this, arguments);
     };
@@ -106,7 +108,7 @@ exports.deprecate = function(fn, msg) {
 var debugs = {};
 var debugEnvRegex = /^$/;
 
-if (process.env.NODE_DEBUG) {
+if (isProcessAvailable && process.env.NODE_DEBUG) {
   var debugEnv = process.env.NODE_DEBUG;
   debugEnv = debugEnv.replace(/[|\\{}()[\]^$+?.]/g, '\\$&')
     .replace(/\*/g, '.*')
@@ -678,6 +680,8 @@ function callbackifyOnRejected(reason, cb) {
   return cb(reason);
 }
 
+var nextTick = typeof queueMicrotask === 'function' ? queueMicrotask : isProcessAvailable && process.nextTick || setTimeout;
+
 function callbackify(original) {
   if (typeof original !== 'function') {
     throw new TypeError('The "original" argument must be of type Function');
@@ -703,8 +707,8 @@ function callbackify(original) {
     // In true node style we process the callback on `nextTick` with all the
     // implications (stack, `uncaughtException`, `async_hooks`)
     original.apply(this, args)
-      .then(function(ret) { process.nextTick(cb.bind(null, null, ret)) },
-            function(rej) { process.nextTick(callbackifyOnRejected.bind(null, rej, cb)) });
+      .then(function(ret) { nextTick(cb.bind(null, null, ret)) },
+            function(rej) { nextTick(callbackifyOnRejected.bind(null, rej, cb)) });
   }
 
   Object.setPrototypeOf(callbackified, Object.getPrototypeOf(original));

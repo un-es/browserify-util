@@ -1,3 +1,21 @@
+# browserify-util
+
+A fork of [`util`](https://github.com/browserify/node-util) which is much more friendly with non Node environment like browser.
+
+It will rebase and try to release in order to sync with the upstream every day, see [.github/workflows/rebase-upstream.yml](.github/workflows/rebase-upstream.yml) for details.
+
+And also you can take https://github.com/browserify/node-util/pull/62 to understand why this forked project exists.
+
+## Installation
+
+```bash
+$ npm install -D util@npm:browserify-util@latest
+```
+
+You may also need to use `overrides` for `npm`, or `resolutions` for `pnpm` or `yarn`.
+
+---
+
 # util [![Build Status](https://travis-ci.org/browserify/node-util.png?branch=master)](https://travis-ci.org/browserify/node-util)
 
 > Node.js's [util][util] module for all engines.

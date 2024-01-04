@@ -1,0 +1,29 @@
+name: Rebase
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  rebase:
+    name: Rebase and Push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: fork-release
+
+      - name: Set Git Info
+        run: |
+          git config --global user.email admin@1stg.me
+          git config --global user.name JounQin
+          git remote add upstream https://github.com/browserify/node-util.git
+
+      - name: Rebase and Push
+        run: |
+          git fetch upstream master:master
+          git rebase upstream/master
+          git push -f
