@@ -44,5 +44,8 @@
     "test:browsers:with-polyfills": "airtap test/browser/with-polyfills.js",
     "test:browsers:with-polyfills:local": "npm run test:browsers:with-polyfills -- --local",
     "test:browsers:local": "npm run test:browsers -- --local"
+  },
+  "engines": {
+    "node": ">=12.6.0"
   }
 }
