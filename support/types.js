@@ -6,9 +6,7 @@
 var isArgumentsObject = function (value) { return Object.prototype.toString.call(value) === '[object Arguments]'; };
 var isGeneratorFunction = require('@nolyfill/is-generator-function');
 var whichTypedArray = require('@nolyfill/which-typed-array');
-var isTypedArray = function isTypedArray(value) {
-  return !!whichTypedArray(value);
-}
+var isTypedArray = value => !!whichTypedArray(value);
 
 function uncurryThis(f) {
   return f.call.bind(f);
