@@ -3,7 +3,7 @@
 
 'use strict';
 
-var isArgumentsObject = function (value) { return Object.prototype.toString.call(value) === '[object Arguments]'; };
+var isArgumentsObject = value => Object.prototype.toString.call(value) === '[object Arguments]';
 var isGeneratorFunction = require('@nolyfill/is-generator-function');
 var whichTypedArray = require('@nolyfill/which-typed-array');
 var isTypedArray = value => !!whichTypedArray(value);
