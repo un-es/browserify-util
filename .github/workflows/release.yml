@@ -36,4 +36,4 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Sync to cnpm
-        run: npx cnpm sync browserify
+        run: npx cnpm sync browserify-util
