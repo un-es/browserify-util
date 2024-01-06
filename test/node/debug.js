@@ -21,7 +21,7 @@
 
 'use strict';
 var assert = require('assert');
-var ObjectAssign = require('object.assign');
+var ObjectAssign = Object.assign;
 
 var modeArgv = process.argv[2]
 var sectionArgv = process.argv[3]

@@ -16,8 +16,7 @@ var _require = require('../../'),
     types = _require.types;
 var vm = require('vm');
 
-var Buffer = require('safe-buffer').Buffer
-var objectEntries = require('object.entries');
+var objectEntries = Object.entries;
 
 // "polyfill" deepStrictEqual on Node 0.12 and below
 if (!assert.deepStrictEqual) {

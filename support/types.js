@@ -3,10 +3,10 @@
 
 'use strict';
 
-var isArgumentsObject = require('is-arguments');
-var isGeneratorFunction = require('is-generator-function');
-var whichTypedArray = require('which-typed-array');
-var isTypedArray = require('is-typed-array');
+var isArgumentsObject = value => Object.prototype.toString.call(value) === '[object Arguments]';
+var isGeneratorFunction = require('@nolyfill/is-generator-function');
+var whichTypedArray = require('@nolyfill/which-typed-array');
+var isTypedArray = value => !!whichTypedArray(value);
 
 function uncurryThis(f) {
   return f.call.bind(f);
